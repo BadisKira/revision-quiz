@@ -1,0 +1,77 @@
+{
+  "navbar": {
+    "logoTitle": "Focus",
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "pricing": "Pricing",
+    "signin": "Sign In with Google"
+  },
+  "heroSection": {
+    "title": "Organize Your YouTube World",
+    "subtitle": "Connect your YouTube account, categorize your subscriptions, and enjoy a personalized video feed tailored to your interests.",
+    "getStarted": "Get Started Free",
+    "demo": "Watch Demo"
+  },
+  "testimonials": {
+    "title": "What Our Users Say"
+  },
+  "features": {
+    "title": "Powerful Features",
+    "subtitle": "Discover how TubeSense helps you take control of your YouTube experience",
+    "feature1": {
+      "title": "Google Authentification",
+      "content": "Securely connect your Google account with just one click. We use OAuth 2.0 to ensure your data remains protected while providing seamless access to your YouTube subscriptions."
+    }
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the plan that works best for you",
+    "typeFree": {
+        "title": "Free",
+        "subtitle": "Perfect for getting started",
+        "currency":"$",
+        "price":"0",
+        "forMonth": "",
+        "benefits":{
+            "benefit1": "Connect 1 YouTube account",
+            "benefit2": "Basic categorization",
+            "benefit3": "Standard video feed",
+            "benefit4": "Limited to 50 subscriptions"
+        },
+        "getStarted": "Get Started"
+    },
+    "typePremium": {
+        "title": "Premium",
+        "subtitle": "For power users who need more",
+        "currency":"$",
+        "price":"9.99",
+        "forMonth": "per month",
+        "benefits":{
+            "benefit1": "Connect multiple YouTube accounts",
+            "benefit2": "Advanced categorization",
+            "benefit3": "Custom video feed algorithms",
+            "benefit4": "Unlimited subscriptions",
+            "benefit5": "Priority support",
+            "benefit6": "Early access to new features  "
+        },
+        "getStarted": "Get Started"
+    },
+    "typeTeam": {
+        "title": "Team",
+        "subtitle": "Perfect for content teams",
+        "currency":"$",
+        "price":"24.99",
+        "forMonth": "per month",
+        "benefits":{
+            "benefit1": "All Premium features",
+            "benefit2": "Team collaboration",
+            "benefit3": "Shared categories",
+            "benefit4": "Analytics dashboard",
+            "benefit5": "Admin controls",
+            "benefit6": "API access"
+        },
+        "getStarted": "Get Started"
+    }
+  },
+  "footer": {}
+}

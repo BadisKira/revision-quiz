@@ -1,0 +1,78 @@
+{
+    "navbar": {
+      "logoTitle": "Focus",
+      "features": "Fonctionnalités",
+      "testimonials": "Témoignages",
+      "pricing": "Tarification",
+      "signin": "Se connecter avec Google"
+    },
+    "heroSection": {
+      "title": "Organisez votre univers YouTube",
+      "subtitle": "Connectez votre compte YouTube, catégorisez vos abonnements et profitez d’un flux vidéo personnalisé selon vos intérêts.",
+      "getStarted": "Commencer gratuitement",
+      "demo": "Regarder la démo"
+    },
+    "testimonials": {
+      "title": "Ce que disent nos utilisateurs"
+    },
+    "features": {
+      "title": "Des fonctionnalités puissantes",
+      "subtitle": "Découvrez comment TubeSense vous aide à maîtriser votre expérience YouTube",
+      "feature1": {
+        "title": "Authentification Google",
+        "content": "Connectez votre compte Google en toute sécurité en un seul clic. Nous utilisons OAuth 2.0 pour garantir la protection de vos données tout en vous offrant un accès fluide à vos abonnements YouTube."
+      }
+    },
+    "pricing": {
+      "title": "Tarification simple et transparente",
+      "subtitle": "Choisissez le plan qui vous convient le mieux",
+      "typeFree": {
+          "title": "Gratuit",
+          "subtitle": "Parfait pour bien débuter",
+          "currency":"$",
+          "price":"0",
+          "forMonth": "",
+          "benefits": {
+              "benefit1": "Connecter 1 compte YouTube",
+              "benefit2": "Catégorisation basique",
+              "benefit3": "Flux vidéo standard",
+              "benefit4": "Limité à 50 abonnements"
+          },
+          "getStarted": "Commencer"
+      },
+      "typePremium": {
+          "title": "Premium",
+          "subtitle": "Pour les utilisateurs avancés ayant besoin de plus",
+          "currency":"$",
+          "price":"9.99",
+          "forMonth": "par mois",
+          "benefits": {
+              "benefit1": "Connecter plusieurs comptes YouTube",
+              "benefit2": "Catégorisation avancée",
+              "benefit3": "Algorithmes de flux vidéo personnalisés",
+              "benefit4": "Abonnements illimités",
+              "benefit5": "Support prioritaire",
+              "benefit6": "Accès anticipé aux nouvelles fonctionnalités"
+          },
+          "getStarted": "Commencer"
+      },
+      "typeTeam": {
+          "title": "Équipe",
+          "subtitle": "Parfait pour les équipes de créateurs",
+          "currency":"$",
+          "price":"24.99",
+          "forMonth": "par mois",
+          "benefits": {
+              "benefit1": "Toutes les fonctionnalités Premium",
+              "benefit2": "Collaboration en équipe",
+              "benefit3": "Catégories partagées",
+              "benefit4": "Tableau de bord analytique",
+              "benefit5": "Contrôles administrateur",
+              "benefit6": "Accès à l'API"
+          },
+          "getStarted": "Commencer"
+      }
+    },
+    "footer": {}
+  }
+  
