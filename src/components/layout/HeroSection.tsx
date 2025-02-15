@@ -2,83 +2,104 @@
 
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { gsap } from "gsap";
-import { Youtube, Layout, Tag, Filter } from "lucide-react";
+import { ArrowRight, Bot } from "lucide-react";
+import gsap from "gsap";
+import { useRouter } from "@/i18n/routing";
 
-export function HeroSection() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const iconsRef = useRef<HTMLDivElement>(null);
+export default function HeroSection() {
+  const heroRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate the main content
-      gsap.from(".hero-content", {
-        opacity: 0,
-        y: 100,
+      gsap.to(".fade-in", {
+        opacity: 1,
+        y: 0,
         duration: 1,
-        ease: "power4.out",
+        stagger: 0.2,
+        ease: "power2.out",
       });
 
-      // Animate the floating icons
-      const icons = iconsRef.current?.children;
-      if (icons) {
-        gsap.from(icons, {
-          scale: 0,
-          opacity: 0,
-          rotation: -180,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "back.out(1.7)",
-          delay: 0.5,
-        });
+      gsap.to(".slide-in-left", {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power2.out",
+      });
 
-        // Convert HTMLCollection to Array before using forEach
-        Array.from(icons).forEach((icon: Element) => {
-          gsap.to(icon, {
-            y: "random(-20, 20)",
-            rotation: "random(-15, 15)",
-            duration: "random(2, 3)",
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
-        });
-      }
+      gsap.to(".slide-in-right", {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        delay: 0.5,
+        ease: "power2.out",
+      });
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={heroRef} className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-background/95 overflow-hidden">
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
-      
-      <div className="container px-4 mx-auto relative z-10">
-        <div className="text-center hero-content">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
-            Organize Your YouTube World
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Connect your YouTube account, categorize your subscriptions, and enjoy a personalized video feed tailored to your interests.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="text-lg">
-              Get Started Free
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg">
-              Watch Demo
-            </Button>
+    <section
+      ref={heroRef}
+      className="py-12 md:py-24 min-h-[calc(100vh-2rem)] flex items-center justify-center bg-gradient-to-b from-background to-secondary/20"
+    >
+      <div className="container max-w-6xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="space-y-6 md:space-y-8 text-center lg:text-left">
+            <h1 className="fade-in text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              {"              Maîtrisez vos entretiens avec l'IA"}{" "}
+            </h1>
+            <p className="fade-in text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+              {
+                "Préparez-vous efficacement aux entretiens d'embauche grâce à notre plateforme d'entraînement alimentée par l'IA."
+              }
+            </p>
+            <div className="fade-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button
+                size="lg"
+                className="group w-full sm:w-auto"
+                onClick={() => {
+                  router.push("/dashboard");
+                }}
+              >
+                Commencer gratuitement
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                En savoir plus
+              </Button>
+            </div>
+          </div>
+          <div className="relative mt-8 lg:mt-0">
+            <div className="slide-in-right bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 mx-auto max-w-[90%] lg:max-w-none">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Bot className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold">
+                  Assistant IA
+                </h3>
+              </div>
+              <div className="space-y-4">
+                <p className="p-3 bg-primary/10 rounded-lg text-sm sm:text-base">
+                  Bonjour ! Je suis votre coach IA. Prêt à simuler un entretien
+                  ?
+                </p>
+                <p className="p-3 bg-secondary rounded-lg text-sm sm:text-base">
+                  {
+                    "                  Oui, je souhaite m'entraîner pour un poste de développeur."
+                  }{" "}
+                </p>
+                <p className="p-3 bg-primary/10 rounded-lg text-sm sm:text-base">
+                  Parfait ! Commençons par les questions techniques...
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Floating icons */}
-        <div ref={iconsRef} className="absolute inset-0 pointer-events-none">
-          <Youtube className="absolute top-1/4 left-1/4 text-red-500 h-12 w-12" />
-          <Layout className="absolute top-1/3 right-1/4 text-blue-500 h-10 w-10" />
-          <Tag className="absolute bottom-1/3 left-1/3 text-green-500 h-8 w-8" />
-          <Filter className="absolute bottom-1/4 right-1/3 text-purple-500 h-10 w-10" />
-        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -7,9 +7,9 @@ export default function AuthPage() {
   const router = useRouter();
   const googleAuth = async () => {
     const supabaseClient = await createClient();
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    const { data,  } = await supabaseClient.auth.signInWithOAuth({
       provider: "google",
-      
+
       options: {
         redirectTo: `${location.origin}/auth/callback`,
         queryParams: {
@@ -18,8 +18,8 @@ export default function AuthPage() {
         },
       },
     });
-    if(data) {
-        router.replace("/personal")
+    if (data) {
+      router.replace("/dashboard");
     }
   };
   return (

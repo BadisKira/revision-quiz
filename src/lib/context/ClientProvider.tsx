@@ -2,7 +2,7 @@
 'use client';
 
 import { User } from '@supabase/supabase-js';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext,  ReactNode } from 'react';
 
 
 export interface UserWithToken extends User{

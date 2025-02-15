@@ -1,91 +1,65 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Bot, Brain, LineChart, Users } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
-    title: "Google Authentication",
-    content: "Securely connect your Google account with just one click. We use OAuth 2.0 to ensure your data remains protected while providing seamless access to your YouTube subscriptions.",
+    title: "IA Conversationnelle Avancée",
+    description: "Notre IA s'adapte à votre niveau et au poste visé pour des simulations d'entretien réalistes.",
+    icon: Bot
   },
   {
-    title: "YouTube API Integration",
-    content: "Automatically sync and manage your YouTube subscriptions. Our platform uses the official YouTube API to fetch your subscription data in real-time, ensuring you never miss updates from your favorite creators.",
+    title: "Analyse Détaillée",
+    description: "Recevez des retours détaillés sur vos réponses et votre communication non verbale.",
+    icon: Brain
   },
   {
-    title: "Smart Categorization",
-    content: "Create custom categories and organize your subscriptions your way. Use tags, folders, or smart filters to group channels based on content type, viewing preferences, or any other criteria that matters to you.",
+    title: "Suivi de Progression",
+    description: "Visualisez votre évolution et identifiez vos points d'amélioration.",
+    icon: LineChart
   },
   {
-    title: "Personalized Feed",
-    content: "Experience a customized video feed that prioritizes content based on your categories and viewing habits. Our algorithm learns from your preferences to deliver the most relevant videos first.",
-  },
-  {
-    title: "Cross-Device Sync",
-    content: "Access your organized subscriptions from any device. Your categories and preferences are automatically synced across all your devices, providing a seamless experience wherever you go.",
-  },
-  {
-    title: "Advanced Analytics",
-    content: "Gain insights into your viewing habits with detailed analytics. Track time spent on different categories, discover viewing patterns, and optimize your content consumption.",
-  },
+    title: "Communauté Active",
+    description: "Échangez avec d'autres candidats et partagez vos expériences.",
+    icon: Users
+  }
 ];
 
-export function FeaturesSection() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".features-content", {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top center+=100",
-          end: "bottom center",
-          toggleActions: "play none none reverse",
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
+export default function FeaturesSection() {
+ 
   return (
-    <section ref={sectionRef} id="features" className="py-24 bg-muted/30">
-      <div className="container px-4 mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Powerful Features
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover how TubeSense helps you take control of your YouTube experience
-          </p>
-        </div>
-
-        <div className="features-content max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
-            {features.map((feature, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-lg">
-                  {feature.title}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {feature.content}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+    <section id="features" className="py-24 bg-background px-4">
+      <div className="container max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          Fonctionnalités Principales
+        </h2>
+        <Accordion type="single" collapsible className="w-full space-y-4">
+          {features.map((feature, index) => (
+            <AccordionItem value={`item-${index}`} key={index} className="feature-item">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <feature.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <span className="text-xl font-semibold">{feature.title}</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground px-16">
+                {feature.description}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
+import '@/app/globals.css'
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Locale, routing } from "@/i18n/routing";

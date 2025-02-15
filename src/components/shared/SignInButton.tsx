@@ -6,7 +6,7 @@ export default function SignInButton() {
     <div className="px-3 py-2">
       <Link href={"/auth"}>
         <Button className="w-full" variant="default">
-          Sign In with Google
+          Se connecter
         </Button>
       </Link>
     </div>

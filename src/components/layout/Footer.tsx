@@ -1,95 +1,41 @@
-import { Youtube, Twitter, Github } from "lucide-react";
-import Link from "next/link";
-
-export function Footer() {
+export default function Footer() {
   return (
-    <footer className="bg-muted/40 border-t">
-      <div className="container px-4 py-12 mx-auto">
+    <footer className="py-12 bg-secondary/20">
+      <div className="container max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Youtube className="h-6 w-6 text-red-600" />
-              <span className="font-bold text-lg">TubeSense</span>
-            </div>
+            <h3 className="text-lg font-semibold">TechQuizAI</h3>
             <p className="text-sm text-muted-foreground">
-              Organize your YouTube subscriptions and discover content that matters to you.
+{"              Préparez-vous efficacement aux entretiens avec l'IA"}
             </p>
-            <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <Github className="h-5 w-5" />
-              </Link>
-            </div>
           </div>
-
           <div>
-            <h3 className="font-semibold mb-4">Product</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#features" className="text-muted-foreground hover:text-foreground">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="#pricing" className="text-muted-foreground hover:text-foreground">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  API
-                </Link>
-              </li>
+            <h4 className="font-semibold mb-4">Produit</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>Fonctionnalités</li>
+              <li>Tarifs</li>
+              <li>Témoignages</li>
             </ul>
           </div>
-
           <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Support
-                </Link>
-              </li>
+            <h4 className="font-semibold mb-4">Ressources</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>Blog</li>
+              <li>Guide</li>
+              <li>FAQ</li>
             </ul>
           </div>
-
           <div>
-            <h3 className="font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Cookie Policy
-                </Link>
-              </li>
+            <h4 className="font-semibold mb-4">Légal</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>{"Conditions d'utilisation"}</li>
+              <li>{"Politique de confidentialité"}</li>
+              <li>Mentions légales</li>
             </ul>
           </div>
         </div>
-
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} TubeSense. All rights reserved.</p>
+          © 2024 InterviewAI. Tous droits réservés.
         </div>
       </div>
     </footer>

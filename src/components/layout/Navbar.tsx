@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Menu, X, Youtube } from "lucide-react";
+import { Brain, Menu, X } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
@@ -33,8 +32,12 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <Youtube className="h-8 w-8 text-red-600" />
-              <span className="font-bold text-xl">Focus</span>
+              <span className="font-bold text-xl">
+                <div className="flex items-center gap-2">
+                  <Brain className="h-6 w-6 text-primary" />
+                  <span className="text-xl font-bold">TechQuizIA</span>
+                </div>
+              </span>
             </Link>
           </div>
 
@@ -44,21 +47,29 @@ export function Navbar() {
                 href="#features"
                 className="text-foreground/80 hover:text-foreground px-3 py-2 rounded-md text-sm font-medium"
               >
-                Features
+                Fonctionnalités
               </Link>
               <Link
                 href="#testimonials"
                 className="text-foreground/80 hover:text-foreground px-3 py-2 rounded-md text-sm font-medium"
               >
-                Testimonials
+                Témoignages
               </Link>
               <Link
                 href="#pricing"
                 className="text-foreground/80 hover:text-foreground px-3 py-2 rounded-md text-sm font-medium"
               >
-                Pricing
+                Plan
               </Link>
-              {!user ? <SignInButton /> : <SignOutButton />}
+              {user && (
+              <Link
+                href="dashboard"
+                className="text-foreground hover:text-foreground/80 block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Tableau de bord
+              </Link>
+            )}
+              {!user ? <SignInButton /> : <SignOutButton isIcon={true} />}
             </div>
           </div>
 
@@ -85,21 +96,29 @@ export function Navbar() {
               href="#features"
               className="text-foreground hover:text-foreground/80 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Features
+              Fonctionnalités
             </Link>
             <Link
               href="#testimonials"
               className="text-foreground hover:text-foreground/80 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Testimonials
+              Témoignages
             </Link>
             <Link
               href="#pricing"
               className="text-foreground hover:text-foreground/80 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Pricing
+              Plan
             </Link>
-            {!user ? <SignInButton /> : <SignOutButton />}
+            {user && (
+              <Link
+                href="dashboard"
+                className="text-foreground hover:text-foreground/80 block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Tableau de bord
+              </Link>
+            )}
+            {!user ? <SignInButton /> : <SignOutButton isIcon={false} />}
           </div>
         </div>
       )}

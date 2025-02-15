@@ -1,128 +1,85 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const plans = [
   {
-    name: "Free",
-    price: "$0",
-    description: "Perfect for getting started",
+    name: "Gratuit",
+    price: "0€",
+    description: "Pour commencer à s'entraîner",
     features: [
-      "Connect 1 YouTube account",
-      "Basic categorization",
-      "Standard video feed",
-      "Limited to 50 subscriptions",
+      "3 simulations d'entretien par mois",
+      "Retours basiques",
+      "Accès à la communauté",
+    ],
+  },
+  {
+    name: "Pro",
+    price: "19€",
+    period: "/mois",
+    description: "Pour les chercheurs d'emploi actifs",
+    features: [
+      "Simulations illimitées",
+      "Retours détaillés",
+      "Analyses personnalisées",
+      "Questions spécifiques au secteur",
     ],
   },
   {
     name: "Premium",
-    price: "$9.99",
-    period: "per month",
-    description: "For power users who need more",
+    price: "39€",
+    period: "/mois",
+    description: "Pour une préparation intensive",
     features: [
-      "Connect multiple YouTube accounts",
-      "Advanced categorization",
-      "Custom video feed algorithms",
-      "Unlimited subscriptions",
-      "Priority support",
-      "Early access to new features",
-    ],
-    popular: true,
-  },
-  {
-    name: "Team",
-    price: "$24.99",
-    period: "per month",
-    description: "Perfect for content teams",
-    features: [
-      "All Premium features",
-      "Team collaboration",
-      "Shared categories",
-      "Analytics dashboard",
-      "Admin controls",
-      "API access",
+      "Tout ce qui est inclus dans Pro",
+      "Coaching personnalisé",
+      "Suivi de progression avancé",
+      "Accès prioritaire aux nouvelles fonctionnalités",
     ],
   },
 ];
 
-export function PricingSection() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".pricing-card");
-      
-      gsap.from(cards, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top center+=100",
-          end: "bottom center",
-          toggleActions: "play none none reverse",
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
+export default function PricingSection() {
   return (
-    <section ref={sectionRef} id="pricing" className="py-24">
-      <div className="container px-4 mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-          <p className="text-xl text-muted-foreground">Choose the plan that works best for you</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <section id="pricing" className="py-24 bg-background px-4">
+      <div className="container max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          Choisissez votre plan
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
-            <Card key={index} className={`pricing-card relative ${plan.popular ? "border-primary shadow-lg" : ""}`}>
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
+            <Card key={index} className="pricing-card">
               <CardHeader>
-                <CardTitle>{plan.name}</CardTitle>
-                <CardDescription>{plan.description}</CardDescription>
+                <CardTitle className="space-y-4">
+                  <div className="text-2xl font-bold">{plan.name}</div>
+                  <div>
+                    <span className="text-2xl font-semibold">{plan.price}</span>
+                    {plan.period && (
+                      <span className="text-muted-foreground">
+                        {plan.period}
+                      </span>
+                    )}
+                  </div>
+                </CardTitle>
+                <p className="text-muted-foreground">{plan.description}</p>
               </CardHeader>
-              
               <CardContent>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  {plan.period && (
-                    <span className="text-muted-foreground">/{plan.period}</span>
-                  )}
-                </div>
-                
-                <ul className="space-y-3">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-primary" />
-                      <span className="text-muted-foreground">{feature}</span>
+                <ul className="space-y-4">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-center gap-2">
+                      <Check className="h-5 w-5 text-primary" />
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
+                <Button className="w-full mt-8">Choisir {plan.name}</Button>
               </CardContent>
-              
-              <CardFooter>
-                <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
-                  Get Started
-                </Button>
-              </CardFooter>
             </Card>
           ))}
         </div>

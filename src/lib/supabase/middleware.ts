@@ -15,7 +15,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
   const user = await supabase.auth.getUser();
 
   // think about retrieving the locale
-  if (request.nextUrl.pathname.startsWith('/personal') && user.error) {
+  if (request.nextUrl.pathname.startsWith('/dashboard') && user.error) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 
