@@ -49,7 +49,7 @@ const formSchema = z.object({
 
 export default function CreateQuizForm() {
   const { user } = useUser();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_URL! + "/api";
   const { setQuiz } = useQuiz();
   const router = useRouter();
   const [loading, setLoading] = useState(false);

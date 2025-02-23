@@ -21,7 +21,7 @@ import { useUser } from "@/lib/context/ClientProvider";
 
 export default function QuizSolver({ quiz }: { quiz: QuizModel }) {
   const { user } = useUser();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_URL! + "/api";
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<

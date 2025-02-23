@@ -1,5 +1,5 @@
+"use client";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
 import {
   Card,
   CardHeader,
@@ -10,25 +10,34 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Trash2 } from "lucide-react";
-import { deleteQuiz } from "@/app/actions/deleteQuiz";
+import { Loader2, Trash2 } from "lucide-react";
 import { QuizModel } from "@/type/quiz";
+import { deleteQuiz } from "@/app/actions/deleteQuiz";
+import { FormEvent, useEffect, useState } from "react";
+import { getQuizzes } from "@/app/actions/getQuizzes";
 
-async function getQuizzes() {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("quiz")
-    .select(`*, achievements(result,score,created_at)`);
+export default function QuizDashboard() {
+  const [loading, setLoading] = useState(false);
+  const [quizzes, setQuizzes] = useState<QuizModel[]>([]);
+  useEffect(() => {
+    getQuizzes().then((data) => {
+      setQuizzes(data);
+    });
+  }, []);
 
-  if (error) {
-    console.error("Erreur lors de la récupération des quiz :", error);
-    return [];
-  }
-  return data;
-}
+  const handleDeleteQuiz = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    setLoading(true);
+    const id = await deleteQuiz(formData);
 
-export default async function QuizDashboard() {
-  const quizzes = await getQuizzes();
+    if (id) {
+      setQuizzes((prev) => {
+        return prev.filter((quiz) => quiz.id !== id);
+      });
+    }
+    setLoading(false);
+  };
 
   return (
     <div className="container mx-auto space-y-4">
@@ -79,7 +88,9 @@ export default async function QuizDashboard() {
                       <p>
                         <span className="text-xs">Fait le </span>
                         <span className="text-sm text-muted-foreground">
-                          {formatDate(quiz.achievements[0].created_at.toString())}
+                          {formatDate(
+                            quiz.achievements[0].created_at.toString()
+                          )}
                         </span>
                       </p>{" "}
                     </div>
@@ -89,17 +100,21 @@ export default async function QuizDashboard() {
                 <Link href={`/dashboard/quiz/${quiz.id}`}>
                   <Button variant="outline">Voir le Quiz</Button>
                 </Link>
-                <form method="post">
-                  <input value={quiz.id_creator} name="id" className="hidden" />
-                  <button type="submit" formAction={deleteQuiz}>
-                    <Trash2 />
-                  </button>
+                <form onSubmit={handleDeleteQuiz}>
+                  <input type="hidden" name="id" value={quiz.id} />
+                  {!loading ? (
+                    <button type="submit">
+                      <Trash2 />
+                    </button>
+                  ) : (
+                    <Loader2 />
+                  )}
                 </form>
               </CardFooter>
             </Card>
           ))
         ) : (
-          <p>Aucun quiz ne correspond aux filtres appliqués.</p>
+          <p>Aucun Quiz</p>
         )}
       </div>
     </div>
