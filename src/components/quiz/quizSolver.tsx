@@ -121,8 +121,16 @@ export default function QuizSolver({ quiz }: { quiz: QuizModel }) {
     });
   };
 
+  const handleRetry = () => {
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+    setIsSubmitted(false);
+    setScore(0);
+  }
+
   return (
-    <div className="container max-w-3xl mx-auto px-4">
+    <div className="container  mx-auto px-4 flex flex-col-reverse md:justify-center md:flex-row-reverse gap-10 ">
+      <Button onClick={handleRetry}>Réessayer</Button>
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex items-center justify-between mb-2">

@@ -5,8 +5,9 @@ import ClientProvider, { UserWithToken } from "@/lib/context/ClientProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/sidebar/appSidebar";
 
+
 export const metadata: Metadata = {
-  title: "Focus",
+  title: "QuizIA",
   description: "",
 };
 
@@ -31,6 +32,7 @@ export default async function RootPrivateLayout({
       ...session.user,
       accessToken: session.access_token,
     };
+
     return (
       <ClientProvider user={user}>
         <SidebarProvider>

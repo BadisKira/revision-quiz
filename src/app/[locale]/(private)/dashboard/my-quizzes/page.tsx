@@ -1,3 +1,5 @@
+
+
 "use client";
 import Link from "next/link";
 import {
@@ -10,20 +12,29 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2, BookOpen, Lock, Unlock, Award } from "lucide-react";
 import { QuizModel } from "@/type/quiz";
-import { deleteQuiz } from "@/app/actions/deleteQuiz";
+import { deleteQuiz } from "@/app/actions/quiz/deleteQuiz";
 import { FormEvent, useEffect, useState } from "react";
-import { getQuizzes } from "@/app/actions/getQuizzes";
+import { getQuizzes } from "@/app/actions/quiz/getQuizzes";
+import LoaderComponent from "@/components/shared/LoaderComponent";
+import { PaginationComponent } from "@/components/shared/PaginationComponent";
+
+const pageSize = 10;
 
 export default function QuizDashboard() {
   const [loading, setLoading] = useState(false);
   const [quizzes, setQuizzes] = useState<QuizModel[]>([]);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    getQuizzes().then((data) => {
+    getQuizzes(page, pageSize).then((response) => {
+      const { data, count } = response as { data: QuizModel[]; count: number };
+      setCount(count);
       setQuizzes(data);
     });
-  }, []);
+  }, [page]);
 
   const handleDeleteQuiz = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,91 +43,119 @@ export default function QuizDashboard() {
     const id = await deleteQuiz(formData);
 
     if (id) {
-      setQuizzes((prev) => {
-        return prev.filter((quiz) => quiz.id !== id);
-      });
+      setQuizzes((prev) => prev.filter((quiz) => quiz.id !== id));
     }
     setLoading(false);
   };
 
   return (
-    <div className="container mx-auto space-y-4">
-      <h1 className="text-3xl font-semibold">Mes Quiz</h1>
+    <div className="container mx-auto py-8 px-4">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Mes Quiz</h1>
+      
+      </div>
 
-      {/**
-       */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 gap-4">
+      <div className="space-y-6">
         {quizzes && quizzes.length > 0 ? (
           quizzes.map((quiz: QuizModel) => (
-            <Card key={quiz.id} className="flex flex-col max-h-80">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="">{quiz.theme}</CardTitle>
-                <div className="space-x-2">
-                  <Badge variant="outline">{quiz.type}</Badge>
-                  <Badge variant="outline">
-                    {quiz.is_public ? "publique" : "privé"}
-                  </Badge>
-                  <Badge variant="outline">{quiz.difficulty}</Badge>
-                  <Badge variant="outline">{quiz.questionCount}</Badge>
+            <Card key={quiz.id} className="overflow-hidden transition-all hover:shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <BookOpen className="h-5 w-5 text-muted-foreground" />
+                    <CardTitle className="text-xl">{quiz.theme}</CardTitle>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {quiz.is_public ? (
+                      <Unlock className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <Lock className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <Badge variant="secondary" className="font-medium">
+                      {quiz.type}
+                    </Badge>
+                    <Badge variant="outline" className="font-medium">
+                      {quiz.difficulty}
+                    </Badge>
+                    <Badge variant="outline" className="font-medium">
+                      {quiz.questionCount} questions
+                    </Badge>
+                  </div>
                 </div>
               </CardHeader>
-              <CardContent className="flex-1 space-y-2">
-                <div className="p-2 bg-muted rounded-lg h-28 overflow-auto">
-                  <strong className="text-sm">Contexte </strong>{" "}
-                  <p className="text-sm text-muted-foreground">
-                    {quiz.context}
-                  </p>
-                </div>
-                {Array.isArray(quiz.achievements) &&
-                  quiz.achievements.length > 0 && (
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div
-                          className={`text-sm flex items-center justify-center 
-                        font-semibold text-muted-foreground h-10 w-10 
-                        ${
+
+              <CardContent className="pb-4">
+                {quiz.context && (
+                  <div className="bg-muted/50 rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {quiz.context}
+                    </p>
+                  </div>
+                )}
+
+                {Array.isArray(quiz.achievements) && quiz.achievements.length > 0 && (
+                  <div className="mt-4 flex items-center gap-4 p-3 bg-primary/5 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <Award className="h-5 w-5 text-primary" />
+                      <div
+                        className={`text-sm font-semibold px-3 py-1 rounded-full ${
                           quiz.achievements[0].score >= 50
-                            ? "text-green-500 border-green-700"
-                            : "text-red-500 border-red-700"
-                        }
-                        border-4 border-spacing-2 
-                         rounded-full `}
-                        >
-                          {quiz.achievements[0].score}%
-                        </div>
-                      </div>{" "}
-                      <p>
-                        <span className="text-xs">Fait le </span>
-                        <span className="text-sm text-muted-foreground">
-                          {formatDate(
-                            quiz.achievements[0].created_at.toString()
-                          )}
-                        </span>
-                      </p>{" "}
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {quiz.achievements[0].score}%
+                      </div>
                     </div>
-                  )}
+                    <div className="text-sm text-muted-foreground">
+                      Complété le {formatDate(quiz.achievements[0].created_at.toString())}
+                    </div>
+                  </div>
+                )}
               </CardContent>
-              <CardFooter className=" flex items-center justify-between">
-                <Link href={`/dashboard/quiz/${quiz.id}`}>
-                  <Button variant="outline">Voir le Quiz</Button>
-                </Link>
-                <form onSubmit={handleDeleteQuiz}>
-                  <input type="hidden" name="id" value={quiz.id} />
-                  {!loading ? (
-                    <button type="submit">
-                      <Trash2 />
-                    </button>
-                  ) : (
-                    <Loader2 />
-                  )}
-                </form>
+
+              <CardFooter className="bg-muted/5 pt-4">
+                <div className="flex items-center justify-between w-full">
+                  <Link href={`/dashboard/quiz/${quiz.id}`}>
+                    <Button variant="default">
+                      Voir le Quiz
+                    </Button>
+                  </Link>
+                  <form onSubmit={handleDeleteQuiz} className="ml-auto">
+                    <input type="hidden" name="id" value={quiz.id} />
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      type="submit"
+                      disabled={loading}
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                      {loading ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-5 w-5" />
+                      )}
+                    </Button>
+                  </form>
+                </div>
               </CardFooter>
             </Card>
           ))
         ) : (
-          <p>Aucun Quiz</p>
+          <LoaderComponent text="Chargement de mes quiz ..." />
         )}
       </div>
+
+      {quizzes && quizzes.length > 0 && (
+        <div className="mt-8">
+          <PaginationComponent
+            pageSize={pageSize}
+            totalElements={count}
+            page={page}
+            setPage={setPage}
+          />
+        </div>
+      )}
     </div>
   );
 }

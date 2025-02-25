@@ -77,8 +77,8 @@ export default function CreateQuizForm() {
       questionCount: parseInt(values.questionCount),
       difficulty: values.difficulty as QuizDifficulty,
     };
+
     try {
-      console.log("API URL +> " , apiUrl);
       const response = await fetch(`${apiUrl}/quizzes`, {
         method: "POST",
         headers: {
@@ -92,6 +92,7 @@ export default function CreateQuizForm() {
         setQuiz(data);
         router.push("/dashboard/quiz/" + data.id);
       }
+      
     } catch (error) {
       console.log("Une erreur s'est produite ", error);
     } finally {
@@ -102,7 +103,7 @@ export default function CreateQuizForm() {
   return (
     <div className="w-full px-4 py-8 mx-auto max-w-7xl">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form  onSubmit={form.handleSubmit(onSubmit)}>
           <Card className="w-full shadow-none">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between flex-wrap gap-4">

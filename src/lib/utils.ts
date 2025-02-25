@@ -21,3 +21,11 @@ export function formatDate(dateStr:string) {
   
   return `${day}/${month}/${year} à ${hours}h${minutes}`;
 }
+
+export function NumberDaysFromDate(dateStr:string) {
+  const date = Math.round(new Date(dateStr).getTime() / 1000);
+  const today = Math.round(Date.now() /1000);
+  const diff = today - date ;
+
+  return Math.floor(diff / (24 * 3600));
+}

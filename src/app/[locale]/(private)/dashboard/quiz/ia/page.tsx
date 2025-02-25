@@ -1,4 +1,3 @@
-"use client";
 import FormQuizCreation from "@/components/quiz/formCreation";
 
 
