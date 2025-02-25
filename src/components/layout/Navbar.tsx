@@ -69,7 +69,7 @@ export function Navbar() {
                 Tableau de bord
               </Link>
             )}
-              {!user ? <SignInButton /> : <SignOutButton isIcon={true} />}
+              {!user ? <SignInButton /> : <SignOutButton />}
             </div>
           </div>
 
@@ -118,7 +118,7 @@ export function Navbar() {
                 Tableau de bord
               </Link>
             )}
-            {!user ? <SignInButton /> : <SignOutButton isIcon={false} />}
+            {!user ? <SignInButton /> : <SignOutButton  />}
           </div>
         </div>
       )}
