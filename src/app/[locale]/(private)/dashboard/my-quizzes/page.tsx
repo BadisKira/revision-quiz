@@ -1,5 +1,3 @@
-
-
 "use client";
 import Link from "next/link";
 import {
@@ -22,7 +20,7 @@ import { PaginationComponent } from "@/components/shared/PaginationComponent";
 
 const pageSize = 10;
 
-export default function QuizDashboard() {
+export default function MesQuiz() {
   const [loading, setLoading] = useState(false);
   const [quizzes, setQuizzes] = useState<QuizModel[]>([]);
   const [count, setCount] = useState(0);
@@ -52,13 +50,15 @@ export default function QuizDashboard() {
     <div className="container mx-auto py-8 px-4">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Mes Quiz</h1>
-      
       </div>
 
       <div className="space-y-6">
         {quizzes && quizzes.length > 0 ? (
           quizzes.map((quiz: QuizModel) => (
-            <Card key={quiz.id} className="overflow-hidden transition-all hover:shadow-lg">
+            <Card
+              key={quiz.id}
+              className="overflow-hidden transition-all hover:shadow-lg"
+            >
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -93,38 +93,38 @@ export default function QuizDashboard() {
                   </div>
                 )}
 
-                {Array.isArray(quiz.achievements) && quiz.achievements.length > 0 && (
-                  <div className="mt-4 flex items-center gap-4 p-3 bg-primary/5 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <Award className="h-5 w-5 text-primary" />
-                      <div
-                        className={`text-sm font-semibold px-3 py-1 rounded-full ${
-                          quiz.achievements[0].score >= 50
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        {quiz.achievements[0].score}%
+                {Array.isArray(quiz.achievements) &&
+                  quiz.achievements.length > 0 && (
+                    <div className="mt-4 flex items-center gap-4 p-3 bg-primary/5 rounded-lg">
+                      <div className="flex items-center gap-2">
+                        <Award className="h-5 w-5 text-primary" />
+                        <div
+                          className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                            quiz.achievements[0].score >= 50
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
+                          }`}
+                        >
+                          {quiz.achievements[0].score}%
+                        </div>
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Complété le{" "}
+                        {formatDate(quiz.achievements[0].created_at.toString())}
                       </div>
                     </div>
-                    <div className="text-sm text-muted-foreground">
-                      Complété le {formatDate(quiz.achievements[0].created_at.toString())}
-                    </div>
-                  </div>
-                )}
+                  )}
               </CardContent>
 
               <CardFooter className="bg-muted/5 pt-4">
                 <div className="flex items-center justify-between w-full">
                   <Link href={`/dashboard/quiz/${quiz.id}`}>
-                    <Button variant="default">
-                      Voir le Quiz
-                    </Button>
+                    <Button variant="default">Voir le Quiz</Button>
                   </Link>
                   <form onSubmit={handleDeleteQuiz} className="ml-auto">
                     <input type="hidden" name="id" value={quiz.id} />
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       size="icon"
                       type="submit"
                       disabled={loading}
@@ -142,7 +142,27 @@ export default function QuizDashboard() {
             </Card>
           ))
         ) : (
-          <LoaderComponent text="Chargement de mes quiz ..." />
+          <>
+            {quizzes.length === 0 ? (
+              <>
+                <div className="flex flex-col items-center justify-center p-6 bg-gray-100 rounded-lg shadow-md my-8 text-center">
+                  <p className="text-xl font-semibold text-gray-700 mb-2">
+                    {"Aucun quiz n'est disponible"}
+                  </p>
+                  <p className="text-gray-500 mb-4">
+                    {"Essayez de générer un nouveau quiz !"}
+                  </p>
+                  <Link href="quiz/ia">
+                    <Button className="px-6 py-2  rounded-md transition duration-200 ease-in-out">
+                      {"Générer un nouveau Quiz"}
+                    </Button>
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <LoaderComponent text="Chargement de mes quiz ..." />
+            )}
+          </>
         )}
       </div>
 

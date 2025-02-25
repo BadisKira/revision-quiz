@@ -18,6 +18,7 @@ import { Brain, Tag, CheckCircle2, XCircle } from "lucide-react";
 import { QuizModel } from "@/type/quiz";
 import { CreateAchievementBody } from "@/type/achievement";
 import { useUser } from "@/lib/context/ClientProvider";
+import { Link } from "@/i18n/routing";
 
 export default function QuizSolver({ quiz }: { quiz: QuizModel }) {
   const { user } = useUser();
@@ -107,7 +108,7 @@ export default function QuizSolver({ quiz }: { quiz: QuizModel }) {
     return userAnswer === answerId;
   };
 
-  const saveAchievement = async (score:number) => {
+  const saveAchievement = async (score: number) => {
     const eleement: CreateAchievementBody = {
       quiz_id: quiz.id,
       user_id: user.id,
@@ -126,11 +127,20 @@ export default function QuizSolver({ quiz }: { quiz: QuizModel }) {
     setUserAnswers({});
     setIsSubmitted(false);
     setScore(0);
-  }
+  };
 
   return (
     <div className="container  mx-auto px-4 flex flex-col-reverse md:justify-center md:flex-row-reverse gap-10 ">
-      <Button onClick={handleRetry}>Réessayer</Button>
+      <div className="space-y-2 flex flex-col">
+        <Button onClick={handleRetry}>Réessayer</Button>
+        {isSubmitted && (
+          <Link href="ia">
+            <Button className="px-6 py-2  rounded-md transition duration-200 ease-in-out">
+              Générer un nouveau Quiz
+            </Button>
+          </Link>
+        )}
+      </div>
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex items-center justify-between mb-2">
@@ -261,13 +271,7 @@ export default function QuizSolver({ quiz }: { quiz: QuizModel }) {
                 <div className="mt-6 p-4 bg-muted rounded-lg">
                   <h4 className="font-semibold mb-2">Explication :</h4>
                   <p className="text-sm text-muted-foreground">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Esse molestias, dolore ipsa eum ut ex expedita, quia,
-                    exercitationem fugit porro perferendis consequuntur? Nostrum
-                    esse quis voluptatibus laboriosam obcaecati fuga atque
-                    ratione laudantium, debitis at dicta nihil velit nulla
-                    maiores hic sed quisquam dolore veritatis vitae adipisci id
-                    error minima autem.{" "}
+                    {currentQuestion.explanation}
                   </p>
                 </div>
               )}

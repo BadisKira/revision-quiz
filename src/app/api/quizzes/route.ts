@@ -46,6 +46,7 @@ export async function POST(request: Request) {
   const questionsPayload = generatedQuestions.map((question) => ({
     quiz_id: quizData.id,
     content: question.content,
+    explanation:question.explanation
   }));
 
   const { data: questionsData, error: questionsError } = await supabase

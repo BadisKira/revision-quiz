@@ -12,21 +12,34 @@ import { useUser } from "@/lib/context/ClientProvider";
 import { Link } from "@/i18n/routing";
 import { Button } from "../../ui/button";
 
-export default function AppSidebarFooter() {
+export default function AppSidebarFooter({
+  openMobile,
+}: {
+  openMobile: boolean;
+}) {
   const { user } = useUser();
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost" 
+          variant="ghost"
           className="w-full py-2 px-3 flex items-center justify-between text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
         >
-          <div className="flex items-center gap-2">
+          <div
+            className={`flex items-center gap-2 ${
+              !openMobile && "relative -left-3"
+            }`}
+          >
             <Avatar className="h-7 w-7">
-              <AvatarFallback className="uppercase">{user?.email?.charAt(0)}</AvatarFallback>
+              <AvatarFallback className="uppercase">
+                {user?.email?.charAt(0)}
+              </AvatarFallback>
             </Avatar>
-            <span className="truncate text-xs font-semibold">{user?.email}</span> 
+            {openMobile && (
+              <span className="truncate text-xs font-semibold">
+                {user?.email}
+              </span>
+            )}
           </div>
         </Button>
       </DropdownMenuTrigger>
@@ -36,7 +49,7 @@ export default function AppSidebarFooter() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer flex justify-center items-center">
-          <SignOutButton  />
+          <SignOutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

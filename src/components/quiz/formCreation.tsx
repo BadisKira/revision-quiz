@@ -92,7 +92,6 @@ export default function CreateQuizForm() {
         setQuiz(data);
         router.push("/dashboard/quiz/" + data.id);
       }
-      
     } catch (error) {
       console.log("Une erreur s'est produite ", error);
     } finally {
@@ -103,7 +102,7 @@ export default function CreateQuizForm() {
   return (
     <div className="w-full px-4 py-8 mx-auto max-w-7xl">
       <Form {...form}>
-        <form  onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card className="w-full shadow-none">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
@@ -250,10 +249,14 @@ export default function CreateQuizForm() {
               </div>
 
               <Button type="submit" className="w-full mt-6" disabled={loading}>
-                {loading && (
-                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                {loading ? (
+                  <div className="flex items-center justify-center gap-6">
+                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                    <span>{"Génération du quiz ..."}</span>
+                  </div>
+                ) : (
+                  "Créer le quiz"
                 )}
-                Créer le quiz
               </Button>
             </CardContent>
           </Card>

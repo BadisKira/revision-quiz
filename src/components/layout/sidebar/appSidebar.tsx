@@ -24,7 +24,6 @@ import {
 import { Link } from "@/i18n/routing";
 import AppSidebarFooter from "./sidebarFooter";
 
-// Menu items.
 const items = [
   {
     title: "Accueil",
@@ -53,7 +52,8 @@ export function AppSidebar() {
     <>
       {isMobile && (
         <PanelLeft
-          className="absolute top-[10px] left-[18px] cursor-pointer" size={15}
+          className="absolute top-[10px] left-[18px] cursor-pointer"
+          size={15}
           onClick={() => {
             setOpenMobile(!openMobile);
           }}
@@ -65,10 +65,12 @@ export function AppSidebar() {
             <SidebarGroupLabel className=" mb-8">
               <Link href="/" className="flex items-center gap-2">
                 <Brain className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold text-primary">TechQuizAI</span>
+                <span className="text-xl font-bold text-primary">
+                  TechQuizAI
+                </span>
               </Link>
             </SidebarGroupLabel>
-            <SidebarTrigger className="ml-auto absolute top-2 z-20 right-2" />
+            <SidebarTrigger className="ml-auto absolute top-2 z-20 right-2" onClick={()=>{setOpenMobile(!openMobile)}} />
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
@@ -88,7 +90,7 @@ export function AppSidebar() {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
-          <AppSidebarFooter />
+          <AppSidebarFooter openMobile={openMobile}/>
         </SidebarFooter>
       </Sidebar>
     </>
