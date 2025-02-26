@@ -14,33 +14,30 @@ const plans = [
     price: "0€",
     description: "Pour commencer à s'entraîner",
     features: [
-      "3 simulations d'entretien par mois",
+      "3 simulations d'entretien",
       "Retours basiques",
-      "Accès à la communauté",
+      "Accès aux quiz de la communauté",
     ],
   },
   {
     name: "Pro",
-    price: "19€",
+    price: "10€",
     period: "/mois",
     description: "Pour les chercheurs d'emploi actifs",
     features: [
       "Simulations illimitées",
       "Retours détaillés",
-      "Analyses personnalisées",
-      "Questions spécifiques au secteur",
+      "10 quiz générés par pdf",
+      "Statistiques et suividétaillés "
     ],
   },
   {
     name: "Premium",
-    price: "39€",
+    price: "19€",
     period: "/mois",
     description: "Pour une préparation intensive",
     features: [
-      "Tout ce qui est inclus dans Pro",
-      "Coaching personnalisé",
-      "Suivi de progression avancé",
-      "Accès prioritaire aux nouvelles fonctionnalités",
+      "Nouvelles fonctionnalités à venir  "
     ],
   },
 ];
@@ -52,7 +49,7 @@ export default function PricingSection() {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
           Choisissez votre plan
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {plans.map((plan, index) => (
             <Card key={index} className="pricing-card">
               <CardHeader>
@@ -78,7 +75,7 @@ export default function PricingSection() {
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full mt-8">Choisir {plan.name}</Button>
+                <Button className={`w-full mt-8`} disabled={plan.name ==="Premium"}>Choisir {plan.name}</Button>
               </CardContent>
             </Card>
           ))}

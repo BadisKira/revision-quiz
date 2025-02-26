@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/routing";
+
 export default function Footer() {
   return (
     <footer className="py-12 bg-secondary/20">
@@ -6,15 +8,21 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">TechQuizAI</h3>
             <p className="text-sm text-muted-foreground">
-{"              Préparez-vous efficacement aux entretiens avec l'IA"}
+              {"Préparez-vous efficacement aux entretiens avec l'IA"}
             </p>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Produit</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Fonctionnalités</li>
-              <li>Tarifs</li>
-              <li>Témoignages</li>
+              <Link className="cursor-pointer" href={"features"}>
+                <li>Fonctionnalités </li>
+              </Link>
+              <Link className="cursor-pointer" href={"pricing"}>
+                <li>Tarifs</li>
+              </Link>
+              <Link className="cursor-pointer" href={"pricing"}>
+                <li>Témoignages</li>
+              </Link>
             </ul>
           </div>
           <div>

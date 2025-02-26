@@ -1,26 +1,22 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
 const testimonials = [
   {
-    name: "Marie L.",
+    name: "Lydia K.",
     role: "Développeuse Full Stack",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
     content: "Grâce à cette plateforme, j'ai gagné en confiance et décroché mon poste de rêve. Les simulations sont incroyablement réalistes !"
   },
   {
     name: "Thomas R.",
     role: "Product Manager",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
     content: "L'analyse détaillée de mes réponses m'a permis d'identifier mes points faibles et de m'améliorer rapidement."
   },
   {
     name: "Sophie M.",
     role: "UX Designer",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
     content: "Un outil indispensable pour la préparation aux entretiens. Les retours personnalisés sont particulièrement pertinents."
   }
 ];
@@ -37,10 +33,7 @@ export default function Testimonials() {
             <Card key={index} className="testimonial-card">
               <CardContent className="p-6 space-y-4">
                 <div className="flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                    <AvatarFallback>{testimonial.name.split(' ')[0][0]}</AvatarFallback>
-                  </Avatar>
+                 
                   <div>
                     <p className="font-semibold">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>

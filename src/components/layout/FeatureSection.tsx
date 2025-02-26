@@ -15,28 +15,30 @@ gsap.registerPlugin(ScrollTrigger);
 const features = [
   {
     title: "IA Conversationnelle Avancée",
-    description: "Notre IA s'adapte à votre niveau et au poste visé pour des simulations d'entretien réalistes.",
-    icon: Bot
+    description:
+      "Notre IA s'adapte à votre niveau et au poste visé pour des simulations d'entretien réalistes.",
+    icon: Bot,
   },
   {
     title: "Analyse Détaillée",
-    description: "Recevez des retours détaillés sur vos réponses et votre communication non verbale.",
-    icon: Brain
+    description:
+      "Recevez des retours détaillés sur vos réponses et votre communication non verbale.",
+    icon: Brain,
   },
   {
     title: "Suivi de Progression",
-    description: "Visualisez votre évolution et identifiez vos points d'amélioration.",
-    icon: LineChart
+    description:
+      "Visualisez votre évolution et identifiez vos points d'amélioration.",
+    icon: LineChart,
   },
   {
     title: "Communauté Active",
-    description: "Échangez avec d'autres candidats et partagez vos expériences.",
-    icon: Users
-  }
+    description: "Accédez aux quiz créer par les autres candidats",
+    icon: Users,
+  },
 ];
 
 export default function FeaturesSection() {
- 
   return (
     <section id="features" className="py-24 bg-background px-4">
       <div className="container max-w-6xl mx-auto">
@@ -45,7 +47,11 @@ export default function FeaturesSection() {
         </h2>
         <Accordion type="single" collapsible className="w-full space-y-4">
           {features.map((feature, index) => (
-            <AccordionItem value={`item-${index}`} key={index} className="feature-item">
+            <AccordionItem
+              value={`item-${index}`}
+              key={index}
+              className="feature-item"
+            >
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
