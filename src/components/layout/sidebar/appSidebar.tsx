@@ -5,6 +5,7 @@ import {
   Sparkles,
   FileText,
   Home,
+  Voicemail,
 } from "lucide-react";
 
 import {
@@ -36,6 +37,11 @@ const items = [
     title: "Générer",
     href: "/dashboard/quiz/ia",
     icon: Sparkles,
+  },
+  {
+    title: "Talk with it",
+    href: "/dashboard/quiz/voice",
+    icon: Voicemail ,
   },
   {
     title: "Mes Quiz",

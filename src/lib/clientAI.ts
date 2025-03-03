@@ -1,10 +1,13 @@
 import { Quiz, QuizDifficulty } from "@/type/quiz";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import { cleanMarkdownJSON } from "./utils";
 import { validateQuestionsJson } from "./validations/jsonValidation";
+import { IACorrection, VoicedQuestion } from "@/type/voice";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+
 
 export const createQuiz = async ({
   theme,
@@ -72,4 +75,69 @@ Assure-toi que :
       quizValidation.error ||
       "Une erreur s'est produite lors de la génération du quiz",
   };
+};
+
+export const createQuestion = async ({
+  theme,
+  context = "",
+  difficulty,
+}: {
+  theme: string;
+  context: string | undefined;
+  difficulty: QuizDifficulty;
+}): Promise<VoicedQuestion | { error: string }> => {
+  try {
+    const prompt = `Génère une question de quiz unique sur le thème "${theme}" avec un niveau de difficulté "${difficulty}". ${
+      context ? "Contexte: " + context : ""
+    }.
+    Réponds uniquement avec un objet JSON de la forme: { "content": "texte de la question" }`;
+
+    
+    const { response } = await model.generateContent(prompt);
+
+    const cleanedResponse = cleanMarkdownJSON(response.text());
+    
+    return  JSON.parse(cleanedResponse) as VoicedQuestion ;
+
+  } catch (error) {
+    console.error("Erreur lors de la création de la question:", error);
+    return { error: "Erreur lors de la génération de la question." };
+  }
+};
+
+export const CorrectingAnswers = async ({
+  question,
+  userAnswer,
+}: {
+  question: string;
+  userAnswer: string;
+}): Promise<IACorrection | { error: string }> => {
+  try {
+    const prompt = `Analyse la situation suivante :
+          Question : "${question}"
+          Réponse de l'utilisateur : "${userAnswer}"
+
+          Ta mission est de :
+          1. Fournir une correction approfondie et détaillée de la réponse de l'utilisateur.
+          2. Expliquer clairement les points forts, les points faibles et les erreurs éventuelles.
+          3. Proposer la réponse exacte ou la méthode correcte en justifiant tes corrections.
+
+          Réponds exclusivement avec un objet JSON conforme exactement au format ci-dessous, sans aucun texte supplémentaire :
+
+          {
+            "resumeAnswer": "Un résumé concis de la réponse de l'utilisateur.",
+            "verdict": "Une évaluation synthétique indiquant si la réponse est correcte, partiellement correcte ou incorrecte.",
+            "correction": "La réponse corrigée, avec explications détaillées des points clés et des erreurs relevées."
+          }`
+    ;
+
+
+    const { response } = await model.generateContent(prompt);
+    const cleanedResponse = cleanMarkdownJSON(response.text());
+    
+    return  JSON.parse(cleanedResponse) as IACorrection ;
+  } catch (error) {
+    console.error("Erreur lors de la correction de la réponse:", error);
+    return { error: "Erreur lors de la correction de la réponse." };
+  }
 };
