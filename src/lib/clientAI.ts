@@ -1,5 +1,5 @@
 import { Quiz, QuizDifficulty } from "@/type/quiz";
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { cleanMarkdownJSON } from "./utils";
 import { validateQuestionsJson } from "./validations/jsonValidation";
 import { IACorrection, VoicedQuestion } from "@/type/voice";

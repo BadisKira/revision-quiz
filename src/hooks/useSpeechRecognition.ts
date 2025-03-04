@@ -8,8 +8,8 @@ export function useSpeechToText() {
 
   useEffect(() => {
     const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
+      (window ).SpeechRecognition ||
+      (window ).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       console.error(
         "Votre navigateur ne supporte pas l'API SpeechRecognition."

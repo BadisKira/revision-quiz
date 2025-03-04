@@ -16,10 +16,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { TimerToStart } from "@/components/voice/timerToStart";
 import { RecordingTimer } from "@/components/voice/recordingTimer";
-import { createQuestion } from "@/lib/clientAI";
-import { correctAnswerAction, generateQuestionAction } from "@/app/actions/quiz/sendAnswerVoice";
+import { correctAnswerAction, generateQuestionAction } from "@/app/actions/quiz/manageQuizVoice";
 import { IACorrection, VoicedQuestion } from "@/type/voice";
-import { error } from "console";
 
 const SpeechToTextComponent: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -46,20 +44,20 @@ const SpeechToTextComponent: React.FC = () => {
 
 
   useEffect(() => {
-    //createQuestion
     async function generateQuestionClient() {
       setLoading(true);
-
       const data = await generateQuestionAction();
       setQuestionToAnswer(data);
       setLoading(false);
-
     }
     generateQuestionClient();
-  }, [])
+  }, []);
+  
 
   if (loading) {
-    return <div>I'm LOAAAAAAAAAAAAADING MON FILS</div>
+    return <div className="font-semibold w-full flex justify-center items-center h-[50dvh]">
+      Création des questions ...
+    </div>
   }
 
   return (
@@ -120,7 +118,7 @@ const SpeechToTextComponent: React.FC = () => {
 
         {!isRecording && speechStarted && transcript && (
 
-          <div className="mt-4 bg-red-100 w-full  bg-red-300">
+          <div className="mt-4 w-full">
             <CorrectionComponent answerContent={transcript} questionContent={questionToAnswer?.content ?? ""} />
           </div>
         )}
@@ -157,7 +155,7 @@ function CorrectionComponent({ answerContent, questionContent }: { answerContent
     if (answerContent !== "") {
       generateCorrection();
     }
-  }, [answerContent]);
+  }, [answerContent,questionContent]);
 
   if (loading) {
     return <div>
@@ -165,24 +163,24 @@ function CorrectionComponent({ answerContent, questionContent }: { answerContent
     </div>
   }
   return (
-      <Card className="w-full shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold">Résultat de la correction</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <h2 className="text-md font-semibold">Résumé de la réponse</h2>
-            <p className=" text-sm text-gray-700">{iaCorrection?.resumeAnswer}</p>
-          </div>
-          <div className="mb-4">
-            <h2 className="text-md font-semibold">Verdict</h2>
-            <p className=" text-sm text-gray-700">{iaCorrection?.verdict}</p>
-          </div>
-          <div>
-            <h2 className="text-md font-semibold">Correction</h2>
-            <p className="text-sm text-gray-700">{iaCorrection?.correction}</p>
-          </div>
-        </CardContent>
-      </Card>
+    <Card className="w-full shadow-lg">
+      <CardHeader>
+        <CardTitle className="text-xl font-bold">Résultat de la correction</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="mb-4">
+          <h2 className="text-md font-semibold">Résumé de la réponse</h2>
+          <p className=" text-sm text-gray-700">{iaCorrection?.resumeAnswer}</p>
+        </div>
+        <div className="mb-4">
+          <h2 className="text-md font-semibold">Verdict</h2>
+          <p className=" text-sm text-gray-700">{iaCorrection?.verdict}</p>
+        </div>
+        <div>
+          <h2 className="text-md font-semibold">Correction</h2>
+          <p className="text-sm text-gray-700">{iaCorrection?.correction}</p>
+        </div>
+      </CardContent>
+    </Card>
   )
 }

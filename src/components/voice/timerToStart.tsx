@@ -24,7 +24,7 @@ export const TimerToStart: React.FC<TimerToStartProps> = ({
 
   return (
     <div className="text-center p-4">
-      <p>L'enregistrement de la réponse commencera dans {count}...</p>
+      <p>{"L'enregistrement "}de la réponse commencera dans {count}...</p>
     </div>
   );
 };
